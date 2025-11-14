@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Tata Surya - [Nama Anda]</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #000000, #1a1a2e); /* Gelap default */
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        /* Partikel bintang untuk efek */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Orbit dan planet dengan animasi smooth */
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+        .orbit:nth-child(1) { width: 250px; height: 250px; top: 50px; left: 50%; transform: translateX(-50%); }
+        .orbit:nth-child(2) { width: 350px; height: 350px; top: 100px; left: 50%; transform: translateX(-50%); animation-duration: 40s; }
+        .planet {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #ff4500, #ffa500);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff4500;
+            animation: orbit 15s linear infinite;
+        }
+        .planet:nth-child(1) { top: 10px; left: 50%; transform: translateX(-50%); }
+        .planet:nth-child(2) { top: 20px; left: 50%; transform: translateX(-50%); animation-duration: 20s; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes orbit { from { transform: rotate(0deg) translateX(125px) rotate(0deg); } to { transform: rotate(360deg) translateX(125px) rotate(-360deg); } }
+
+        header {
+            background: radial-gradient(circle, #ff4500, #000000);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            z-index: 1;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        header:hover { transform: translateY(-10px); } /* Efek parallax sederhana */
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ffffff;
+            box-shadow: 0 0 20px #ff4500;
+            transition: box-shadow 0.3s;
+        }
+        header img:hover { box-shadow: 0 0 30px #ff4500; }
+        h1 { font-size: 3em; margin: 20px 0; text-shadow: 0 0 10px #ff4500; transition: text-shadow 0.3s; }
+        h1:hover { text-shadow: 0 0 20px #ff4500; }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            overflow-x: auto; /* Untuk scroll horizontal jika banyak tab */
+        }
+        .tab-button {
+            background: #555;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        .tab-button.active, .tab-button:hover { background: #ff4500; transform: scale(1.05); }
+
+        .tab-content {
+            display: none;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            z-index: 1;
+        }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+        .fade-in { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { color: #ff4500; border-bottom: 2px solid #ff4500; padding-bottom: 10px; transition: color 0.3s; }
+        h2:hover { color: #ff6347; }
+        ul { list-style: none; padding: 0; }
+        ul li { background: rgba(0, 0, 0, 0.5); margin: 10px 0; padding: 10px; border-left: 5px solid #ff4500; transition: background 0.3s; }
+        ul li:hover { background: rgba(255, 69, 0, 0.2); }
+        .project { margin-bottom: 20px; transition: transform 0.3s; }
+        .project:hover { transform: scale(1.02); }
+        .project h3 { color: #ff4500; }
+        .music-player { margin: 20px 0; }
+        .music-player audio { width: 100%; }
+        footer { background: rgba(0, 0, 0, 0.9); text-align: center; padding: 20px; color: #ffffff; }
+        footer a { color: #ff4500; text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+        footer a:hover { color: #ff6347; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <!-- Partikel bintang -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Orbit dan planet -->
+    <div class="orbit"><div class="planet"></div></div>
+    <div class="orbit"><div class="planet"></div></div>
+
+    <header>
+        <a href="https://ibb.co.com/kg7BjxZx"><img src="https://i.ibb.co.com/kg7BjxZx/889d4c1f927606a80e9b0eae4a63f33e.jpg" alt="889d4c1f927606a80e9b0eae4a63f33e" border="0"></a> <!-- foto profil -->
+        <h1>Rynn</h1>
+        <p>Hanya Seseorang Yang Ingin Membuat Sesuatu </p>
+    </header>
+
+    <!-- Tab Navigasi (Klik) -->
+    <div class="tabs">
+        <button class="tab-button active" data-tab="about">About</button>
+        <button class="tab-button" data-tab="skills">Skills</button>
+        <button class="tab-button" data-tab="projects">Projects</button>
+        <button class="tab-button" data-tab="experience">Experience</button>
+        <button class="tab-button" data-tab="music">Music</button>
+        <button class="tab-button" data-tab="contact">Contact</button>
+    </div>
+
+    <!-- Konten Tab -->
+    <div id="about" class="tab-content active fade-in">
+        <h2>my reason</h2>
+        <p>Saya terinspirasi oleh seseorang untuk mengeksplorasi hal-hal baru.</p>
+    </div>
+
+    <div id="skills" class="tab-content fade-in">
+        <h2>Skills</h2>
+        <ul>
+            <li>HTML, CSS, JavaScript</li>
+            <li>Python, React</li>
+            <li>Desain Grafis (Alight Motion, Photoshop, After Effect,)</li>
+            <li>Database (MySQL, MongoDB)</li>
+            <!-- Skill -->
+        </ul>
+    </div>
+
+    <div id="projects" class="tab-content fade-in">
+        <h2>Resseler</h2>
+        <div class="project">
+            <h3>Barang 1: Alight Motion Premium</h3>
+            <p>Menjual AM premium </p>
+            <a href="https://ibb.co.com/39zYcS8p"><img src="https://i.ibb.co.com/39zYcS8p/Proyek-Baru-EBBA7-ED.png" alt="Proyek-Baru-EBBA7-ED" border="0"></a>
+        </div>
+        <div class="project">
+            <h3>Barang 2: Capcut premium</h3>
+            <p>Menjual Capcut premium </p>
+            <a href="https://ibb.co.com/zWQ8Nq1M"><img src="https://i.ibb.co.com/zWQ8Nq1M/SAVE-20251113-090706.jpg" alt="SAVE-20251113-090706" border="0"></a>
+        </div>
+        <!-- Proyek lainnya -->
+    </div>
+
+    <div id="experience" class="tab-content fade-in">
+        <h2>Experience</h2>
+        <ul>
+            <li>[2022]: Kelas 1 smp - Suka yang berbau coding</li>
+            <li>[2025]: Kelas 10 - Sudah bisa membuat website</li>
+            <!-- Pengalaman -->
+        </ul>
+    </div>
+
+    <div id="music" class="tab-content fade-in">
+        <h2>Music</h2>
+        <p>Lagu favorit saya untuk inspirasi coding dan eksplorasi:</p>
+        <div class="music-player">
+            <!-- YouTube -->
+            <iframe width="100%" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="music-player">
+            <!-- HTML5 Audio belum jadi -->
+            
+        </div>
+        <!-- lagu -->
+    </div>
+
+    <div id="contact" class="tab-content fade-in">
+        <h2>Contact and Donate</h2>
+        <p>Email: hamizrafa79@gmail.com</p>
+        <p>Trakteer: trakteer.id/Rynn_store</p>
+        <p>GitHub: https://github.com/Raf730</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Rynn. Terinspirasi dari seseorang.</p>
+        <a href="mailto:[hamizrafa79@gmail.com]">Email</a> | <a href="[trakteer.id/Rynn_store]">Trakteer</a>
+    </footer>
+
+    <script>
+        // tabs (tanpa geser)
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        function showTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            tabButtons.forEach(button => button.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Klik pada tab
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                showTab(tabId);
+            });
+        });
+
+        // Animasi fade-in saat scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        });
+        document.querySelectorAll('.tab-content').forEach(el => observer.observe(el));
+
+        // Generate partikel bintang
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>
